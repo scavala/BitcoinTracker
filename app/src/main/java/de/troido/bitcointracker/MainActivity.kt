@@ -15,7 +15,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val viewModel: BitcoinViewModel by viewModels()
-    private val executor = Executors.newSingleThreadScheduledExecutor()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,18 +31,9 @@ class MainActivity : AppCompatActivity() {
             priceAdapter.submitList(priceList?.toMutableList())
 
         }
+        viewModel.getPrices()
         setContentView(binding.root)
     }
 
-    override fun onResume() {
-        super.onResume()
-        executor.scheduleAtFixedRate({ viewModel.getPrices() }, 0, 15, TimeUnit.SECONDS)
 
-    }
-
-    override fun onStop() {
-        executor.shutdown();
-        executor.awaitTermination(10, TimeUnit.MINUTES);
-        super.onStop()
-    }
 }

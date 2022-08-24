@@ -7,11 +7,18 @@ import de.troido.bitcointracker.network.Network
 import de.troido.bitcointracker.network.model.BitcoinData
 import kotlinx.coroutines.launch
 import java.util.*
+import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
 
 class BitcoinViewModel : ViewModel() {
 
+
     val bitcoinLastPrices = MutableLiveData<LinkedList<BitcoinData>>()
+    private val executor = Executors.newSingleThreadScheduledExecutor()
+
     fun getPrices() {
+        executor.scheduleAtFixedRate({
+
         viewModelScope.launch {
             val bitcoinLatestPrice = Network().getService().getBitcoinStats()
             val prices = bitcoinLastPrices.value
@@ -24,7 +31,7 @@ class BitcoinViewModel : ViewModel() {
                 bitcoinLastPrices.value = LinkedList<BitcoinData>(newPriceList)
 
             }
-        }
+        }}, 0, 15, TimeUnit.SECONDS)
     }
 
 }
