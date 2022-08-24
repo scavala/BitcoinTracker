@@ -1,6 +1,6 @@
-package de.troido.bitcointracker.network
+package de.troido.network
 
-import de.troido.bitcointracker.network.model.BitcoinData
+import de.troido.network.model.BitcoinData
 import retrofit2.http.GET
 
 interface BitcoinService {

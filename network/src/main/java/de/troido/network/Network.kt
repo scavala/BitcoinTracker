@@ -1,4 +1,4 @@
-package de.troido.bitcointracker.network
+package de.troido.network
 
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
