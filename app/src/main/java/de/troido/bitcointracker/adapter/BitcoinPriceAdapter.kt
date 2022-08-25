@@ -8,25 +8,25 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import de.troido.bitcointracker.R
-import de.troido.network.model.BitcoinData
+import de.troido.domain.Price
 
 class BitcoinPriceAdapter :
-    ListAdapter<de.troido.network.model.BitcoinData, BitcoinPriceAdapter.BitcoinViewHolder>(BitcoinDiffCallBack()) {
+    ListAdapter<Price, BitcoinPriceAdapter.BitcoinViewHolder>(BitcoinDiffCallBack()) {
     class BitcoinViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
         private val tvPrice = itemView.findViewById<TextView>(R.id.tvPrice)
         private val tvTime = itemView.findViewById<TextView>(R.id.tvTime)
-        fun bind(data: de.troido.network.model.BitcoinData) {
-            tvPrice.text = data.bpi?.USD?.rate ?: "N/A"
-            tvTime.text = data.time?.updatedISO
+        fun bind(data: Price) {
+            tvPrice.text = data.amount?: "N/A"
+            tvTime.text = data.time
         }
     }
 
-    private class BitcoinDiffCallBack : DiffUtil.ItemCallback<de.troido.network.model.BitcoinData>() {
-        override fun areItemsTheSame(oldItem: de.troido.network.model.BitcoinData, newItem: de.troido.network.model.BitcoinData): Boolean =
+    private class BitcoinDiffCallBack : DiffUtil.ItemCallback<Price>() {
+        override fun areItemsTheSame(oldItem: Price, newItem: Price): Boolean =
             oldItem.time == newItem.time
 
-        override fun areContentsTheSame(oldItem: de.troido.network.model.BitcoinData, newItem: de.troido.network.model.BitcoinData): Boolean =
+        override fun areContentsTheSame(oldItem: Price, newItem: Price): Boolean =
             oldItem.time == newItem.time
     }
 
