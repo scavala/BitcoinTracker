@@ -3,25 +3,23 @@ package de.troido.bitcointracker.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import de.troido.domain.GetLatestPriceUseCase
 import de.troido.domain.Price
-import de.troido.network.model.BitcoinData
-import de.troido.network.repository.BitcoinRepositoryImpl
 import kotlinx.coroutines.launch
 import java.util.*
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
-class BitcoinViewModel() : ViewModel() {
+@HiltViewModel
+class BitcoinViewModel @Inject constructor(private val getLatestPriceUseCase: GetLatestPriceUseCase) :
+    ViewModel() {
 
 
     val bitcoinLastPrices = MutableLiveData<LinkedList<Price>>()
     private val executor = Executors.newSingleThreadScheduledExecutor()
-    private val repo: GetLatestPriceUseCase
 
-    init {
-        repo = GetLatestPriceUseCase(BitcoinRepositoryImpl())
-    }
 
     fun getPrices() {
         executor.scheduleAtFixedRate({
@@ -32,7 +30,7 @@ class BitcoinViewModel() : ViewModel() {
     }
 
     private suspend fun getLatestPrices() {
-        val bitcoinLatestPrice = repo.invoke()
+        val bitcoinLatestPrice = getLatestPriceUseCase.invoke()
         val prices = bitcoinLastPrices.value
         if (prices == null) {
             bitcoinLastPrices.value = LinkedList<Price>(listOf(bitcoinLatestPrice))

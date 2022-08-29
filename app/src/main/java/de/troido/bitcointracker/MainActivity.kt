@@ -4,13 +4,12 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import de.troido.bitcointracker.adapter.BitcoinPriceAdapter
 import de.troido.bitcointracker.databinding.ActivityMainBinding
 import de.troido.bitcointracker.viewmodel.BitcoinViewModel
-import java.util.concurrent.Executors
-import java.util.concurrent.TimeUnit
 
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -18,6 +17,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
         binding = ActivityMainBinding.inflate(layoutInflater)
 
         val recyclerView = binding.rvPrices

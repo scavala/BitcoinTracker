@@ -17,7 +17,7 @@ class BitcoinPriceAdapter :
         private val tvPrice = itemView.findViewById<TextView>(R.id.tvPrice)
         private val tvTime = itemView.findViewById<TextView>(R.id.tvTime)
         fun bind(data: Price) {
-            tvPrice.text = data.amount?: "N/A"
+            tvPrice.text = data.amount ?: "N/A"
             tvTime.text = data.time
         }
     }
