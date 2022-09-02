@@ -10,7 +10,7 @@ class BitcoinRepositoryImpl @Inject constructor( private val service: BitcoinSer
 
     override suspend fun getPrice(): Price {
         val data = service.getBitcoinStats()
-        return Price(data.time!!.updatedISO!!, data.bpi!!.USD!!.rate!!)
+        return Price(data.time.updatedISO, data.bpi.USD.rate)
     }
 
 

@@ -1,16 +1,10 @@
 package de.troido.domain
 
-import de.troido.network.repository.BitcoinRepositoryImpl
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.*
-
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.Mockito
 import org.mockito.Mockito.*
-import org.mockito.junit.MockitoJUnitRunner
 
 
 class GetLatestPriceUseCaseTest {
